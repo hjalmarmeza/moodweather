@@ -45,18 +45,27 @@
 
 html {
     overflow-x: hidden;
-    width: 100%;
+    width: 100vw;
+    height: 100%;
+    /* Force height */
+    position: fixed;
+    /* NUCLEAR OPTION: Prevents iOS elastic bounce on body */
+    overflow-y: auto;
+    /* Allow internal scroll if needed */
+    -webkit-overflow-scrolling: touch;
 }
 
 body {
     background-color: #000;
     color: var(--text-white);
     font-family: var(--font-body);
-    height: 100vh;
-    overflow: hidden;
+    width: 100vw;
+    height: 100%;
     overflow-x: hidden;
-    /* CRITICAL: Prevents side scrolling */
-    position: relative;
+    position: absolute;
+    /* Lock relative to fixed html */
+    top: 0;
+    left: 0;
     /* Ensure text readable on bright backgrounds */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
