@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodWeather | Clima Atmosférico y Relajación</title>
+    <meta name="description"
+        content="Experimenta el clima de una forma inmersiva. Sonidos relajantes, visuales impresionantes y datos meteorológicos precisos en MoodWeather.">
+
+    <!-- PWA / Mobile Capable -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MoodWeather">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1163/1163661.png">
+    <meta name="theme-color" content="#0f0f13">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600;800&family=Inter:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/new-cards.css">
+</head>
+
+<body>
+    <!-- Background Layer (Changes with weather) -->
+    <!-- CINEMATIC    <!-- DYNAMIC BACKGROUND (Video MP4) -->
+    <video id="bg-visual" class="video-background" autoplay loop muted playsinline></video>
+    <div class="video-overlay"></div>
+
+    <!-- Rain/Snow/Particles Overlay -->
+
+    <!-- Rain/Snow/Particles Overlay -->
+    <!-- LANDING OVERLAY -->
+    <div id="landing-overlay" class="landing-overlay">
+        <div class="landing-content">
+            <span class="material-icons-round landing-icon">water_drop</span>
+            <h1>MoodWeather</h1>
+            <p>Toca para iniciar</p>
+        </div>
+    </div>
+
+    <!-- Rain/Snow/Particles Overlay -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Glassmorphism Container -->
+    <main class="glass-container">
+        <header class="main-header">
+            <div class="logo">
+                <span class="material-icons-round">water_drop</span>
+                <h1>Mood<span class="highlight">Weather</span></h1>
+            </div>
+
+            <div class="search-container">
+                <div class="search-bar">
+                    <span class="material-icons-round search-icon">search</span>
+                    <input type="text" id="city-search" placeholder="Buscar ciudad..." autocomplete="off">
+                    <ul id="suggestions" class="suggestions-list"></ul>
+                </div>
+
+                <!-- Menu / Cities Button -->
+                <button id="btn-menu" class="glass-btn btn-menu" title="Mis Ciudades">
+                    <span class="material-icons-round">menu</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Cities Drawer (Hidden by default) -->
+        <div id="cities-drawer" class="cities-drawer">
+            <div class="drawer-header">
+                <h3>Mis Ciudades</h3>
+                <button id="btn-close-drawer" class="btn-menu"><span class="material-icons-round">close</span></button>
+            </div>
+            <div id="favorites-list" class="favorites-list-vertical">
+                <!-- JS will pop this -->
+            </div>
+
+            <!-- Quick Link to Current Location -->
+            <div class="fav-card-row" id="btn-geo-drawer" style="margin-top:auto; background:rgba(0,255,255,0.1)">
+                <span class="city-name">Usar mi Ubicación</span>
+                <span class="material-icons-round">my_location</span>
+            </div>
+        </div>
+
+        <!-- Floating Quick Widget -->
+        <div id="floating-widget" class="floating-widget hidden">
+            <div class="widget-content">
+                <div class="widget-temp">
+                    <span id="widget-temp">--</span>°
+                </div>
+                <div class="widget-info">
+                    <div id="widget-condition">--</div>
+                    <div class="widget-details">
+                        <span id="widget-wind">-- km/h</span>
+                        <span class="widget-dot">•</span>
+                        <span id="widget-feels">Sensación: --°</span>
+                    </div>
+                </div>
+            </div>
+            <button id="widget-toggle" class="widget-toggle" title="Minimizar">
+                <span class="material-icons-round">expand_more</span>
+            </button>
+        </div>
+
+        <!-- REMOVED OLD FAVORITES BAR -->
+
+        <section class="weather-display">
+            <!-- PRO HEADER: Dense Info -->
+            <!-- CLIME HERO HEADER -->
+            <div class="clime-hero">
+
+                <!-- Top Label -->
+                <div class="location-top-label">
+                    <span class="material-icons-round" style="font-size:14px">navigation</span>
+                    <span>Ubicación</span>
+                </div>
+
+                <!-- City -->
+                <div class="hero-city-row">
+                    <h1 id="city-name">--</h1>
+                    <button id="btn-toggle-fav" class="hero-fav-btn" title="Favorito">
+                        <span class="material-icons-round">favorite_border</span>
+                    </button>
+                </div>
+
+                <!-- Day Phase & Moon Phase Indicator (moved here) -->
+                <div class="day-phase-indicator">
+                    <div id="phase-icon" class="phase-icon">☀️</div>
+                    <div id="phase-label" class="phase-label">Mañana</div>
+                </div>
+
+                <!-- Giant Temp -->
+                <div class="hero-temp-wrapper">
+                    <span id="temperature">--</span><span class="degree">°</span>
+                </div>
+
+                <!-- Description -->
+                <p id="weather-desc" class="hero-desc-text">
+                    <span id="weather-icon"
+                        style="margin-right:5px; font-size:1.2em; vertical-align:middle; display:inline-block"></span>
+                    --
+                </p>
+
+                <!-- Weather Alert Banner -->
+                <div id="weather-alert" class="weather-alert hidden">
+                    <span class="material-icons-round alert-icon">warning</span>
+                    <div class="alert-content">
+                        <div class="alert-title" id="alert-title">Alerta Meteorológica</div>
+                        <div class="alert-message" id="alert-message">--</div>
+                    </div>
+                </div>
+
+
+
+                <!-- Clean Meta Line -->
+                <div class="hero-meta-line">
+                    <span>Sensación: <span id="apparent-temp">--</span>°</span>
+                    <span class="dot"></span>
+                    <span>Viento: <span id="wind-speed-hero">--</span> km/h</span> <!-- NEW -->
+                    <span class="dot"></span>
+                    <span>Máx: <span id="temp-max">--</span>°</span>
+                    <span class="dot"></span>
+                    <span>Mín: <span id="temp-min">--</span>°</span>
+                </div>
+
+                <!-- Feels Like Explanation -->
+                <div class="feels-like-explanation" id="feels-like-explanation">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+
+            <!-- ALERT CARD (Placeholder for layout match) -->
+            <div class="alert-card glass-card" style="margin: 20px 0; display:none" id="alert-box">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:5px; color:#ffcc00">
+                    <span class="material-icons-round">warning</span>
+                    <strong>Clima Extremo</strong>
+                </div>
+                <p>Alerta moderada por viento.</p>
+            </div>
+
+            <!-- MODULES CONTAINER -->
+            <div class="modules-container">
+
+                <!-- CARD 1: HOURLY FORECAST -->
+                <div class="glass-card">
+                    <h3><span class="material-icons-round">thermostat</span> Temperatura del día</h3>
+                    <div class="hourly-scroll" id="hourly-container">
+                        <!-- JS fills this -->
+                    </div>
+                </div>
+
+                <!-- CARD 2: DAILY PRO -->
+                <div class="glass-card">
+                    <h3><span class="material-icons-round">calendar_today</span> Pronóstico 7 Días</h3>
+                    <div class="daily-list" id="daily-container">
+                        <!-- JS fills this with PRO bars -->
+                    </div>
+                </div>
+
+                <!-- CARD 3: DETAILS GRID (Cleaned) -->
+                <div class="glass-card">
+                    <h3><span class="material-icons-round">tune</span> Detalles</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="material-icons-round" style="color:#4facfe">water_drop</span>
+                            <span class="value" id="humidity">--</span>
+                            <span class="label">Humedad</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="material-icons-round" style="color:#ffcc00">wb_sunny</span>
+                            <span class="value" id="uv-index">--</span>
+                            <span class="label">Índice UV</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="material-icons-round" style="color:#a8edea">visibility</span>
+                            <span class="value" id="visibility">--</span>
+                            <span class="label">Visibilidad</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 4: AIR QUALITY -->
+                <div class="glass-card">
+                    <h3><span class="material-icons-round">air</span> Calidad del Aire</h3>
+                    <div class="air-quality-container">
+                        <div class="aqi-display">
+                            <div class="aqi-value" id="aqi-value">--</div>
+                            <div class="aqi-label" id="aqi-label">Cargando...</div>
+                            <div class="aqi-description" id="aqi-description">Analizando...</div>
+                        </div>
+                        <div class="aqi-details">
+                            <div class="aqi-detail-item">
+                                <span class="aqi-detail-label">Partículas Finas</span>
+                                <span class="aqi-detail-value" id="pm25-value">--</span>
+                            </div>
+                            <div class="aqi-detail-item">
+                                <span class="aqi-detail-label">Partículas Gruesas</span>
+                                <span class="aqi-detail-value" id="pm10-value">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 5: WIND MAP -->
+                <div class="glass-card">
+                    <h3><span class="material-icons-round">explore</span> Mapa de Viento</h3>
+                    <div class="wind-map-container">
+                        <iframe id="wind-map" width="100%" height="300" frameborder="0" style="border-radius: 12px;">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <!-- CARD 6: WIND DETAILS -->
+            <div class="glass-card">
+                <h3><span class="material-icons-round">air</span> Viento</h3>
+                <div class="wind-details-container">
+                    <div class="wind-compass">
+                        <div class="compass-outer">
+                            <div class="compass-labels">
+                                <span class="compass-n">N</span>
+                                <span class="compass-e">E</span>
+                                <span class="compass-s">S</span>
+                                <span class="compass-w">O</span>
+                            </div>
+                            <div id="wind-arrow" class="wind-arrow">
+                                <span class="material-icons-round">navigation</span>
+                            </div>
+                            <div class="wind-speed-center">
+                                <div id="wind-speed-display" class="wind-speed-value">--</div>
+                                <div class="wind-speed-unit">km/h</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wind-info-list">
+                        <div class="wind-info-item">
+                            <span class="wind-info-label">Viento</span>
+                            <span id="wind-current" class="wind-info-value">-- km/h</span>
+                        </div>
+                        <div class="wind-info-item">
+                            <span class="wind-info-label">Ráfagas</span>
+                            <span id="wind-gusts" class="wind-info-value">-- km/h</span>
+                        </div>
+                        <div class="wind-info-item">
+                            <span class="wind-info-label">Dirección</span>
+                            <span id="wind-direction" class="wind-info-value">--°</span>
+                        </div>
+                        <div class="wind-comment" id="wind-comment">
+                            Analizando condiciones del viento...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 7: SUN & PRECIPITATION -->
+            <div class="sun-precip-grid">
+                <!-- Sunset/Sunrise -->
+                <div class="glass-card">
+                    <h3><span class="material-icons-round">wb_twilight</span> Atardecer</h3>
+                    <div class="sun-display">
+                        <div class="sun-time-large" id="sunset-time">--:--</div>
+                        <div class="sun-arc-container">
+                            <svg class="sun-arc" viewBox="0 0 200 100">
+                                <path d="M 10 90 Q 100 10 190 90" fill="none" stroke="rgba(255,255,255,0.2)"
+                                    stroke-width="2" />
+                                <circle id="sun-position" cx="100" cy="50" r="8" fill="#FFD700" />
+                            </svg>
+                        </div>
+                        <div class="sunrise-time">Amanecer: <span id="sunrise-time">--:--</span></div>
+                    </div>
+                </div>
+
+                <!-- Precipitation -->
+                <div class="glass-card">
+                    <h3><span class="material-icons-round">water_drop</span> Precipitación</h3>
+                    <div class="precip-display">
+                        <div class="precip-item">
+                            <div class="precip-value" id="precip-last-24">-- mm</div>
+                            <div class="precip-label">últimas 24 h</div>
+                        </div>
+                        <div class="precip-divider"></div>
+                        <div class="precip-item">
+                            <div class="precip-value" id="precip-next-24">-- mm</div>
+                            <div class="precip-label">próximas 24 h</div>
+                        </div>
+                    </div>
+                    <div class="precip-comment" id="precip-comment">
+                        Analizando precipitación...
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            </div>
+
+            <!-- NEW PREMIUM CARDS -->
+            <div class="modules-container" style="margin-top: 30px;">
+
+                <!-- Humidity & Dew Point Card -->
+                <div class="glass-card">
+                    <h3><span class="material-icons-round">opacity</span> Humedad & Punto de Rocío</h3>
+                    <div class="humidity-display">
+                        <div class="humidity-main">
+                            <div class="humidity-value" id="humidity-percent">--</div>
+                            <div class="humidity-label">Humedad Relativa</div>
+                        </div>
+                        <div class="dew-point-info">
+                            <div class="dew-item">
+                                <span class="dew-label">Punto de Rocío</span>
+                                <span class="dew-value" id="dew-point">--°C</span>
+                            </div>
+                            <div class="comfort-indicator" id="comfort-level">
+                                <span class="material-icons-round">sentiment_satisfied</span>
+                                <span id="comfort-text">Calculando...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outdoor Activity Index Card -->
+                <div class="glass-card">
+                    <h3><span class="material-icons-round">directions_run</span> Índice de Actividad</h3>
+                    <div class="activity-display">
+                        <div class="activity-score-container">
+                            <svg class="activity-circle" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.1)"
+                                    stroke-width="8" />
+                                <circle id="activity-progress" cx="60" cy="60" r="50" fill="none" stroke="#4facfe"
+                                    stroke-width="8" stroke-linecap="round" stroke-dasharray="314"
+                                    stroke-dashoffset="314" transform="rotate(-90 60 60)" />
+                            </svg>
+                            <div class="activity-score" id="activity-score">--</div>
+                        </div>
+                        <div class="activity-info">
+                            <div class="activity-recommendation" id="activity-recommendation">
+                                Analizando condiciones...
+                            </div>
+                            <div class="activity-factors" id="activity-factors">
+                                <span>🌡️ Temp</span>
+                                <span>💨 Viento</span>
+                                <span>☀️ UV</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stellar Visibility Card (only shown at night) -->
+                <div class="glass-card" id="stellar-card" style="display: none;">
+                    <h3><span class="material-icons-round">nightlight</span> Visibilidad Estelar</h3>
+                    <div class="stellar-display">
+                        <div class="stellar-score-container">
+                            <div class="stellar-icon">⭐</div>
+                            <div class="stellar-score" id="stellar-score">--</div>
+                            <div class="stellar-label">/ 10</div>
+                        </div>
+                        <div class="stellar-info">
+                            <div class="stellar-condition" id="stellar-condition">
+                                Calculando visibilidad...
+                            </div>
+                            <div class="stellar-best-time" id="stellar-best-time">
+                                Mejor momento: --:--
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mood-quote" style="margin-top:20px;">
+                <p id="quote">"El clima es el estado de ánimo de la naturaleza."</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Hidden Audio Player -->
+    <audio id="ambient-audio" loop></audio>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
