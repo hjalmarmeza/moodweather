@@ -203,14 +203,16 @@ body {
 .cities-drawer {
     position: fixed;
     top: 0;
-    right: -320px;
-    /* Hidden by default */
+    right: 0;
+    /* Align to edge */
+    transform: translateX(100%);
+    /* Move visually outside without expanding width */
     width: 300px;
     height: 100vh;
     background: rgba(30, 30, 35, 0.95);
     backdrop-filter: blur(20px);
     z-index: 5000;
-    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -219,7 +221,8 @@ body {
 }
 
 .cities-drawer.open {
-    right: 0;
+    transform: translateX(0);
+    /* Bring back to view */
 }
 
 .drawer-header {
