@@ -43,12 +43,19 @@
     display: none;
 }
 
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 body {
     background-color: #000;
     color: var(--text-white);
     font-family: var(--font-body);
     height: 100vh;
     overflow: hidden;
+    overflow-x: hidden;
+    /* CRITICAL: Prevents side scrolling */
     position: relative;
     /* Ensure text readable on bright backgrounds */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
