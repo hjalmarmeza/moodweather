@@ -32,15 +32,30 @@
     <link rel="stylesheet" href="css/style.css?v=2">
 
     <style>
-        /* CRITICAL MOBILE OVERRIDES (FORCE UPDATE) */
-        html,
+        /* SAFARI FRIENDLY CRITICAL CSS */
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
         body {
-            overflow-x: hidden !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            /* position: fixed !important; REMOVED - Breaks Safari Click */
-            min-height: 100% !important;
-            -webkit-overflow-scrolling: touch !important;
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+            min-height: 100vh;
+            touch-action: pan-y;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Ensure Start Overlay works */
+        #start-overlay {
+            z-index: 99999 !important;
+            cursor: pointer;
+            display: flex;
+            /* Force flex */
+            align-items: center;
+            justify-content: center;
         }
 
         /* Compact Search - FORCE */
@@ -56,7 +71,6 @@
 
         .search-input {
             font-size: 16px !important;
-            /* Prevents iOS zoom on focus */
         }
 
         /* Compact Widgets */
@@ -66,17 +80,43 @@
             padding: 5px 0 !important;
         }
 
-        /* Hide AQI Particles - GLOBAL */
+        /* Hide AQI Particles */
         .aqi-grid {
             display: none !important;
         }
 
-        /* Prevent side scroll from anything */
         * {
             max-width: 100vw !important;
             box-sizing: border-box !important;
-            /* CRITICAL: Prevents padding from breaking width */
         }
+    </style>
+
+    <!-- Error Handler Script -->
+    <script>
+        window.onerror = function (msg, url, line) {
+            // alert("Error: " + msg + "\nLine: " + line); // Uncomment for extreme debug
+            console.error(msg);
+        };
+    </script>
+
+    /* Compact Widgets */
+    .hour-item {
+    min-width: 50px !important;
+    width: 50px !important;
+    padding: 5px 0 !important;
+    }
+
+    /* Hide AQI Particles - GLOBAL */
+    .aqi-grid {
+    display: none !important;
+    }
+
+    /* Prevent side scroll from anything */
+    * {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    /* CRITICAL: Prevents padding from breaking width */
+    }
     </style>
     <link rel="stylesheet" href="css/new-cards.css">
 </head>
