@@ -1509,11 +1509,11 @@ function interpretWeatherCode(code, isDay) {
     }
     else if (code >= 45 && code <= 48) {
         result.label = 'Niebla';
-        result.icon = 'blur_on';
+        result.icon = 'cloud'; // Clearer than 'blur_on'
     }
     else if (code >= 51 && code <= 57) {
         result.label = 'Llovizna';
-        result.icon = 'grain';
+        result.icon = 'water_drop'; // Clearer than 'grain'
         result.particle = 'rain';
     }
     else if (code >= 61 && code <= 67) { // Rain: Slight, moderate and heavy intensity
@@ -1523,7 +1523,7 @@ function interpretWeatherCode(code, isDay) {
     }
     else if (code >= 80 && code <= 82) { // Rain showers: Slight, moderate, and violent
         result.label = 'Chubascos';
-        result.icon = 'grain'; // closest to showers or use water_drop
+        result.icon = 'thunderstorm'; // Universal "Heavy Weather" symbol
         result.particle = 'rain';
     }
     else if (code >= 71 && code <= 77) { // Snow fall & Snow grains
