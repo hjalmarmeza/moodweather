@@ -1321,15 +1321,107 @@ body.zen-active #btn-zen-exit {
     letter-spacing: 0.5px;
 }
 
+/* --- GLOBAL LAYOUT FIXES --- */
+html {
+    overflow-x: hidden;
+    width: 100%;
+    /* Changed from 100vw to prevent scrollbar width issues */
+    height: 100%;
+    position: fixed;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body {
+    width: 100%;
+    /* Changed from 100vw */
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* Fix Iframe/Map overflowing */
+iframe {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* --- COMPACT SEARCH BAR --- */
+.search-container {
+    margin-top: 10px;
+    /* Reduced from 20px */
+    margin-bottom: 10px;
+    height: 50px;
+    /* Force smaller height */
+}
+
+.search-bar {
+    padding: 0 15px;
+    /* Reduced padding */
+    height: 44px;
+    /* Standard mobile touch size */
+}
+
+.search-input {
+    font-size: 0.95rem;
+    /* Smaller font */
+}
+
+.menu-btn {
+    width: 44px;
+    height: 44px;
+}
+
+/* --- COMPACT HOURLY WIDGET --- */
+.glass-card h3 {
+    font-size: 0.8rem;
+    /* Smaller title to fit one line */
+    letter-spacing: 1px;
+    white-space: nowrap;
+    /* Prevent line break */
+    margin-bottom: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.hour-item {
+    min-width: 52px;
+    /* Reduced from 64px to show more items */
+    width: 52px;
+    padding: 8px 0;
+    /* Reduced padding */
+    gap: 4px;
+    /* Tighter gap */
+}
+
+.hour-item span {
+    font-size: 0.8rem;
+}
+
+.hour-item .material-icons-round {
+    font-size: 1.3rem;
+    /* Smaller icon */
+}
+
+/* --- HIDE AQI PARTICLES --- */
+.aqi-grid {
+    display: none !important;
+    /* Hides PM2.5 and PM10 details */
+}
+
+/* --- Restored Meta Line --- */
 .hero-meta-line {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
+    /* Compact size */
     font-weight: 400;
     opacity: 0.95;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
+    /* Tighter gap */
     align-items: center;
+    margin-top: 5px;
 }
 
 .hero-meta-line span {
@@ -1338,26 +1430,28 @@ body.zen-active #btn-zen-exit {
 
 .hero-meta-line .dot {
     display: inline-block;
-    width: 4px;
-    height: 4px;
+    width: 3px;
+    /* Smaller dot */
+    height: 3px;
     background: rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     margin: 0 4px;
 }
 
 .feels-like-explanation {
-    margin-top: 12px;
-    font-size: 0.9rem;
+    margin-top: 8px;
+    /* Tighter margin */
+    font-size: 0.85rem;
+    /* Smaller explanation */
     opacity: 0.75;
     text-align: center;
     font-style: italic;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
-    line-height: 1.4;
+    line-height: 1.3;
 }
 
-/* Adjust Module container to sit nicely below */
 .modules-container {
     margin-top: 20px;
 }

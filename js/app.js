@@ -607,9 +607,14 @@ async function loadAirQuality(lat, lon) {
 function loadWindMap(lat, lon) {
     const iframe = document.getElementById('wind-map');
     if (iframe) {
-        // Windy.com embed with wind layer
-        const windyUrl = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&detailLat=${lat}&detailLon=${lon}&width=650&height=450&zoom=8&level=surface&overlay=wind&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`;
+        // Windy.com embed: Using width=100% in URL parameters doesn't work for embed layout sometimes, 
+        // but styling the iframe element accounts for responsive design.
+        // We reduce the requested explicit width in URL to something small, letting CSS handle the expansion.
+        const windyUrl = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&detailLat=${lat}&detailLon=${lon}&width=400&height=450&zoom=8&level=surface&overlay=wind&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`;
         iframe.src = windyUrl;
+        // Important: Ensure iframe element has strictly 100% width via JS too
+        iframe.style.width = '100%';
+        iframe.style.maxWidth = '100%';
     }
 }
 
