@@ -1501,7 +1501,7 @@ function interpretWeatherCode(code, isDay) {
     }
     else if (code === 2) {
         result.label = 'Parcialmente Nublado';
-        result.icon = isDay ? 'partly_cloudy_day' : 'nights_stay'; // nights_stay is cleaner for night
+        result.icon = isDay ? 'wb_cloudy' : 'nights_stay'; // 'wb_cloudy' is safer/centered
     }
     else if (code === 3) {
         result.label = 'Nublado';
