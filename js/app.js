@@ -739,10 +739,13 @@ function updateUI(weather, details, hourly, daily) {
 
                 const div = document.createElement('div');
                 div.className = 'hour-item';
+                // INLINE STYLES TO FORCE LAYOUT (Bypasses CSS Cache)
+                div.style.cssText = 'min-width: 55px; width: 55px; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; position: relative; padding: 6px 0; background: rgba(255,255,255,0.08); border-radius: 12px; gap: 4px;';
+
                 div.innerHTML = `
-                    <span>${timeStr}</span>
-                    <span class="material-icons-round">${hourCond.icon}</span>
-                    <span>${temp}°</span>
+                    <span style="font-size: 0.7rem; opacity: 0.8; text-align: center; width: 100%; display: block;">${timeStr}</span>
+                    <span class="material-icons-round" style="display: flex; align-items: center; justify-content: center; width: 100%; text-align: center; margin: 0 auto; font-size: 24px; color: #fff; overflow: hidden;">${hourCond.icon}</span>
+                    <span style="font-size: 0.9rem; font-weight: 600; text-align: center; width: 100%; display: block;">${temp}°</span>
                 `;
                 container.appendChild(div);
             }
