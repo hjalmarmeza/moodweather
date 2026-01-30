@@ -2432,7 +2432,16 @@ text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         opacity: 1 !important;
         z-index: 10;
         margin: 0 !important;
+        padding: 0 !important;
         text-align: center !important;
+        /* NUCLEAR RESET */
+        position: static !important;
+        float: none !important;
+        transform: none !important;
+        left: auto !important;
+        right: auto !important;
+        border: none !important;
+        background: transparent !important;
     }
 
     /* Image fallback */
