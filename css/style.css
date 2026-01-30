@@ -1821,6 +1821,65 @@ iframe {
     line-height: 1.4;
 }
 
+/* --- CRITICAL MOBILE FIXES (Moved from HTML Head) --- */
+
+/* SAFARI FRIENDLY CRITICAL CSS */
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    min-height: 100vh;
+    touch-action: pan-y;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ensure Start Overlay works */
+#start-overlay {
+    z-index: 99999 !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Compact Search - FORCE */
+.search-container {
+    margin-top: 10px !important;
+    height: 50px !important;
+}
+
+.search-bar {
+    height: 44px !important;
+    padding: 0 12px !important;
+}
+
+.search-input {
+    font-size: 16px !important;
+}
+
+/* Compact Widgets */
+.hour-item {
+    min-width: 50px !important;
+    width: 50px !important;
+    padding: 5px 0 !important;
+}
+
+/* Hide AQI Particles */
+.aqi-grid {
+    display: none !important;
+}
+
+* {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+}
+
 /* --- SUN & PRECIPITATION GRID --- */
 .sun-precip-grid {
     display: grid;
