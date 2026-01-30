@@ -38,9 +38,8 @@
             overflow-x: hidden !important;
             width: 100% !important;
             max-width: 100% !important;
-            position: fixed !important;
-            /* Anti-bounce */
-            height: 100% !important;
+            /* position: fixed !important; REMOVED - Breaks Safari Click */
+            min-height: 100% !important;
             -webkit-overflow-scrolling: touch !important;
         }
 
@@ -478,9 +477,10 @@
     <audio id="ambient-audio" loop></audio>
 
     <!-- Version Indicator -->
+    <!-- Version Indicator -->
     <div
         style="position: fixed; bottom: 5px; right: 5px; font-size: 10px; opacity: 0.5; color: white; background: rgba(0,0,0,0.5); padding: 2px 5px; border-radius: 4px; z-index: 9999; pointer-events: none;">
-        v1.2 (Compact)
+        v1.3 (Safari Fix)
     </div>
 
     <script src="js/app.js"></script>
