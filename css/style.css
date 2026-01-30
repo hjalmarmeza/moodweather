@@ -1885,6 +1885,52 @@ body {
     display: none !important;
 }
 
+/* CENTER AQI WIDGET */
+.air-quality-container {
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100%;
+}
+
+.aqi-display {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* FIX DETAILS GRID OVERFLOW */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Force 3 columns */
+    gap: 6px !important;
+    /* Tighter gap */
+    width: 100%;
+}
+
+.stat-card {
+    padding: 12px 4px !important;
+    /* Minimal side padding */
+    min-width: 0 !important;
+    width: 100% !important;
+}
+
+.stat-card .value {
+    font-size: 1.1rem !important;
+    /* Slightly smaller value */
+}
+
+.stat-card .label {
+    font-size: 0.65rem !important;
+    /* Compact label */
+    letter-spacing: 0.5px;
+}
+
+.stat-card .material-icons-round {
+    font-size: 1.5rem !important;
+    /* Adjust icon size */
+    margin-bottom: 5px;
+}
+
 * {
     max-width: 100vw !important;
     box-sizing: border-box !important;
