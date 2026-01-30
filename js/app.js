@@ -1523,7 +1523,7 @@ function interpretWeatherCode(code, isDay) {
     }
     else if (code >= 80 && code <= 82) { // Rain showers: Slight, moderate, and violent
         result.label = 'Chubascos';
-        result.icon = 'tsunami'; // closest to showers or use water_drop
+        result.icon = 'grain'; // closest to showers or use water_drop
         result.particle = 'rain';
     }
     else if (code >= 71 && code <= 77) { // Snow fall & Snow grains
