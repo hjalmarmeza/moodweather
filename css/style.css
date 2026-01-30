@@ -1874,7 +1874,7 @@ body {
 }
 
 /* FIX HOURLY WIDGET (ICON GHOSTING) */
-/* FIX HOURLY WIDGET (ICON VISIBILITY) */
+/* FIX HOURLY WIDGET (ICON VISIBILITY & CENTER) */
 .hour-item {
     min-width: 55px !important;
     width: 55px !important;
@@ -1882,7 +1882,11 @@ body {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    /* Center Horizontally */
     justify-content: center !important;
+    /* Center Vertically */
+    text-align: center !important;
+    /* Text Center */
     gap: 4px !important;
     background: rgba(255, 255, 255, 0.05) !important;
     border-radius: 12px !important;
@@ -1892,13 +1896,15 @@ body {
 .hour-item .material-icons-round {
     display: block !important;
     font-size: 24px !important;
-    width: auto !important;
-    /* Allow auto width for text */
+    width: 100% !important;
+    /* Full width to center text */
+    text-align: center !important;
     height: auto !important;
     line-height: 1 !important;
     color: #fff !important;
     opacity: 1 !important;
     z-index: 10;
+    margin: 0 !important;
 }
 
 /* Image fallback (if any) */
@@ -1906,7 +1912,22 @@ body {
     width: 24px !important;
     height: 24px !important;
     object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+    /* Center image */
     z-index: 10;
+}
+
+/* AQI VALUE VISIBILITY FIX (OVERRIDE) */
+.aqi-value {
+    color: #ffff !important;
+    /* Pure White */
+    background: none !important;
+    /* Remove gradient */
+    -webkit-text-fill-color: #ffffff !important;
+    /* Override webkit fill */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    /* Pop out */
 }
 
 .hour-time {
